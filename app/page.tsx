@@ -95,7 +95,6 @@ const FileExplorer = () => {
                   <th>Name</th>
                   <th>Size (Bytes)</th>
                   <th>Last Modified</th>
-                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -121,7 +120,6 @@ const FileExplorer = () => {
                     </td>
                     <td>{file.size}</td>
                     <td>{new Date(file.lastModified).toLocaleString()}</td>
-                    <td>{/* Kolom Actions dikosongkan karena tidak ada tombol lagi */}</td>
                   </tr>
                 ))}
               </tbody>

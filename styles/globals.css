@@ -31,18 +31,14 @@ button {
 
 .dark .file-list {
   background-color: #222;
-  color: white;
-}
-
-.dark .table-header {
-  background: linear-gradient(45deg, #0a0a0a, #2c2c2c);
-  color: white;
-  padding: 10px;
 }
 
 .dark .file-item {
   background-color: #333;
   border: 1px solid #444;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 15px;
 }
 
 .dark .file-item:hover {
@@ -70,18 +66,14 @@ button {
 
 .light .file-list {
   background-color: #fff;
-  color: black;
-}
-
-.light .table-header {
-  background: linear-gradient(45deg, #f4f4f4, #e0e0e0);
-  color: black;
-  padding: 10px;
 }
 
 .light .file-item {
   background-color: #f9f9f9;
   border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 15px;
 }
 
 .light .file-item:hover {
@@ -99,8 +91,8 @@ button {
 /* Grid Layout for Files */
 .file-list {
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr 1fr;
-  gap: 10px;
+  grid-template-columns: 1fr;
+  gap: 15px;
   margin-top: 20px;
 }
 
@@ -109,16 +101,22 @@ button {
   font-weight: bold;
   border-bottom: 2px solid #ddd;
   padding: 10px;
+  background-color: #f0f0f0;
 }
 
-.file-item {
-  display: contents;
-  padding: 10px;
-  border-radius: 5px;
+.file-items {
+  display: flex;
+  flex-direction: column;
 }
 
-.file-item:hover {
-  background-color: #e2e2e2;
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .actions {

@@ -10,22 +10,32 @@ export async function GET(req: Request) {
   const directoryPath = path.join(process.cwd(), 'public', folderPath); // Menggunakan folder dinamis
 
   try {
-    // Membaca isi folder
-    const files = fs.readdirSync(directoryPath);
+    const stats = fs.statSync(directoryPath); // Mendapatkan informasi tentang folder/file
 
-    // Mengambil detail file: nama, ukuran, tanggal terakhir diubah
-    const fileDetails = files.map((file) => {
-      const filePath = path.join(directoryPath, file);
-      const stats = fs.statSync(filePath); // Mendapatkan metadata file
+    // Jika directoryPath adalah folder
+    if (stats.isDirectory()) {
+      const files = fs.readdirSync(directoryPath);
 
-      return {
-        name: file,
-        size: stats.size,  // Ukuran dalam byte
-        lastModified: stats.mtime,  // Tanggal terakhir diubah
-      };
-    });
+      const fileDetails = files.map((file) => {
+        const filePath = path.join(directoryPath, file);
+        const stats = fs.statSync(filePath); // Mendapatkan metadata file
 
-    return NextResponse.json(fileDetails, { status: 200 });
+        return {
+          name: file,
+          size: stats.size,  // Ukuran dalam byte
+          lastModified: stats.mtime,  // Tanggal terakhir diubah
+          isDirectory: stats.isDirectory(), // Menandakan apakah ini folder atau file
+        };
+      });
+
+      return NextResponse.json(fileDetails, { status: 200 });
+    } else {
+      // Jika file, kembalikan informasi raw URL
+      return NextResponse.json(
+        { name: path.basename(directoryPath), rawUrl: `/public/${folderPath}` },
+        { status: 200 }
+      );
+    }
   } catch (error) {
     return NextResponse.json({ error: 'Unable to read directory or file details' }, { status: 500 });
   }

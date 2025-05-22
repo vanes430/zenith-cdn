@@ -31,6 +31,15 @@ const FileExplorer = () => {
     fetchFiles(folder); // Memuat folder yang dipilih
   };
 
+  const handleBackToRoot = () => {
+    fetchFiles(''); // Kembali ke folder root
+  };
+
+  const handleBackToParent = () => {
+    const parentFolder = currentFolder.split('/').slice(0, -1).join('/');
+    fetchFiles(parentFolder); // Kembali ke parent folder
+  };
+
   return (
     <div>
       <h2>Files in folder: {currentFolder || 'Root'}</h2>
@@ -38,14 +47,25 @@ const FileExplorer = () => {
         <p>{error}</p>
       ) : (
         <div>
-          <button onClick={() => handleFolderChange('')}>Back to Root</button>
+          <button onClick={handleBackToRoot}>Back to Root</button>
+          {currentFolder && (
+            <button onClick={handleBackToParent}>
+              Back to Parent Folder ( : )
+            </button>
+          )}
           <ul>
             {files.map((file, index) => (
               <li key={index}>
                 <strong>{file.name}</strong>
                 <p>Size: {file.size} bytes</p>
                 <p>Last Modified: {new Date(file.lastModified).toLocaleString()}</p>
-                <button onClick={() => handleFolderChange(file.name)}>Open Folder</button>
+                {file.isDirectory ? (
+                  <button onClick={() => handleFolderChange(file.name)}>Open Folder</button>
+                ) : (
+                  <a href={file.rawUrl} target="_blank" rel="noopener noreferrer">
+                    View Raw File
+                  </a>
+                )}
               </li>
             ))}
           </ul>

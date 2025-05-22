@@ -95,9 +95,9 @@ const FileExplorer = () => {
         ) : (
           <div>
             <div className="button-group">
-              <button onClick={handleBackToRoot}>Back to Root</button>
+              <button onClick={handleBackToRoot}>Root</button>
               {currentFolder && (
-                <button onClick={handleBackToParent}>Back to Parent Folder</button>
+                <button onClick={handleBackToParent}>parent..</button>
               )}
             </div>
             <table className="file-table">

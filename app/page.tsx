@@ -1,5 +1,7 @@
 // app/page.tsx
 
+'use client';  // Tambahkan directive ini di atas
+
 import { useState, useEffect } from 'react';
 
 const FileExplorer = () => {

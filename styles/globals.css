@@ -1,6 +1,5 @@
 /* CSS Variables for Configurable Colors */
 :root {
-  /* Light Mode */
   --background-light: #fff;
   --text-light: #1a1a1a;
   --table-header-bg-light: #f8f9fa;
@@ -10,8 +9,8 @@
   --button-bg-light: #0070f3;
   --button-text-light: #fff;
   --button-hover-bg-light: #005bb5;
+  --link-color-light: #0070f3;
 
-  /* Dark Mode */
   --background-dark: #121212;
   --text-dark: #e0e0e0;
   --table-header-bg-dark: #1a1a1a;
@@ -21,6 +20,7 @@
   --button-bg-dark: #0070f3;
   --button-text-dark: #fff;
   --button-hover-bg-dark: #005bb5;
+  --link-color-dark: #66b0ff;
 }
 
 /* Default Styles */
@@ -174,6 +174,31 @@ main {
 
 .file-icon::before {
   content: var(--file-icon, '📄 ');
+}
+
+/* Clickable Folder */
+.clickable {
+  cursor: pointer;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.light .clickable {
+  color: var(--link-color-light);
+}
+
+.light .clickable:hover {
+  text-decoration: underline;
+  color: var(--button-hover-bg-light);
+}
+
+.dark .clickable {
+  color: var(--link-color-dark);
+}
+
+.dark .clickable:hover {
+  text-decoration: underline;
+  color: var(--button-hover-bg-dark);
 }
 
 /* File Content */

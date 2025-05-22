@@ -5,11 +5,11 @@ import Link from 'next/link';
 
 // Konfigurasi yang dapat diatur
 const CONFIG = {
-  title: 'File Explorer', // Judul header
-  copyrightText: '© 2025 Your Company Name. All rights reserved.', // Teks copyright
-  folderIcon: '📁', // Ikon untuk folder
-  fileIcon: '📄', // Ikon untuk file
-  darkModeByDefault: true, // Mode awal (true = dark, false = light)
+  title: 'File Explorer',
+  copyrightText: '© 2025 Your Company Name. All rights reserved.',
+  folderIcon: '📁',
+  fileIcon: '📄',
+  darkModeByDefault: true,
 };
 
 const FileExplorer = () => {
@@ -19,13 +19,11 @@ const FileExplorer = () => {
   const [error, setError] = useState<string | null>(null);
   const [darkMode, setDarkMode] = useState<boolean>(CONFIG.darkModeByDefault);
 
-  // Pastikan class .dark atau .light diterapkan saat pertama kali dimuat
   useEffect(() => {
     document.documentElement.classList.toggle('dark', CONFIG.darkModeByDefault);
     document.documentElement.classList.toggle('light', !CONFIG.darkModeByDefault);
   }, []);
 
-  // Function to toggle dark/light mode
   const toggleDarkMode = () => {
     setDarkMode((prevMode) => {
       const newMode = !prevMode;
@@ -42,7 +40,13 @@ const FileExplorer = () => {
         throw new Error('Failed to fetch files');
       }
       const data = await res.json();
-      setFiles(data);
+      // Urutkan files: folder di atas, file di bawah
+      const sortedFiles = data.sort((a: any, b: any) => {
+        if (a.isDirectory && !b.isDirectory) return -1;
+        if (!a.isDirectory && b.isDirectory) return 1;
+        return a.name.localeCompare(b.name); // Urutkan berdasarkan nama jika sama-sama folder atau file
+      });
+      setFiles(sortedFiles);
       setCurrentFolder(folder);
       setSelectedFileContent(null);
     } catch (error) {
@@ -95,9 +99,9 @@ const FileExplorer = () => {
         ) : (
           <div>
             <div className="button-group">
-              <button onClick={handleBackToRoot}>Root</button>
+              <button onClick={handleBackToRoot}>Back to Root</button>
               {currentFolder && (
-                <button onClick={handleBackToParent}>parent..</button>
+                <button onClick={handleBackToParent}>Back to Parent Folder</button>
               )}
             </div>
             <table className="file-table">
@@ -113,18 +117,21 @@ const FileExplorer = () => {
                 {files.map((file, index) => (
                   <tr key={index} className="file-row">
                     <td>
-                      <span className={file.isDirectory ? 'folder-icon' : 'file-icon'}>
-                        {file.name}
-                      </span>
+                      {file.isDirectory ? (
+                        <span
+                          className="folder-icon clickable"
+                          onClick={() => handleFolderChange(file.name)}
+                        >
+                          {file.name}
+                        </span>
+                      ) : (
+                        <span className="file-icon">{file.name}</span>
+                      )}
                     </td>
                     <td>{file.size}</td>
                     <td>{new Date(file.lastModified).toLocaleString()}</td>
                     <td>
-                      {file.isDirectory ? (
-                        <button onClick={() => handleFolderChange(file.name)}>
-                          Open Folder
-                        </button>
-                      ) : (
+                      {!file.isDirectory && (
                         <Link href={`/${currentFolder ? `${currentFolder}/` : ''}${file.name}`}>
                           <button onClick={() => handleViewRawFile(file.name)}>
                             View Raw File

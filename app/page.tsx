@@ -80,25 +80,27 @@ const FileExplorer = () => {
           )}
           <div className="file-list">
             <div className="table-header">
-              <span>Name</span>
-              <span>Size (bytes)</span>
-              <span>Last Modified</span>
-              <span>Actions</span>
+              <div>Name</div>
+              <div>Size (bytes)</div>
+              <div>Last Modified</div>
+              <div>Actions</div>
             </div>
             <div className="file-items">
               {files.map((file, index) => (
                 <div key={index} className="file-item">
-                  <span>{file.name}</span>
-                  <span>{file.size}</span>
-                  <span>{new Date(file.lastModified).toLocaleString()}</span>
-                  <div className="actions">
-                    {file.isDirectory ? (
-                      <button onClick={() => handleFolderChange(file.name)}>Open Folder</button>
-                    ) : (
-                      <Link href={`/${currentFolder ? currentFolder + '/' : ''}${file.name}`}>
-                        <button>View Raw File</button>
-                      </Link>
-                    )}
+                  <div className="card">
+                    <h4>{file.name}</h4>
+                    <p>Size: {file.size}</p>
+                    <p>Last Modified: {new Date(file.lastModified).toLocaleString()}</p>
+                    <div className="actions">
+                      {file.isDirectory ? (
+                        <button onClick={() => handleFolderChange(file.name)}>Open Folder</button>
+                      ) : (
+                        <Link href={`/${currentFolder ? currentFolder + '/' : ''}${file.name}`}>
+                          <button>View Raw File</button>
+                        </Link>
+                      )}
+                    </div>
                   </div>
                 </div>
               ))}

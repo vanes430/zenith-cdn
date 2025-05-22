@@ -176,7 +176,7 @@ main {
   content: var(--file-icon, '📄 ');
 }
 
-/* Clickable Folder */
+/* Clickable Folder and File */
 .clickable {
   cursor: pointer;
   text-decoration: none;
@@ -199,31 +199,6 @@ main {
 .dark .clickable:hover {
   text-decoration: underline;
   color: var(--button-hover-bg-dark);
-}
-
-/* File Content */
-.file-content {
-  margin-top: 20px;
-}
-
-.file-content h3 {
-  margin-bottom: 10px;
-}
-
-pre {
-  padding: 10px;
-  border-radius: 4px;
-  overflow-x: auto;
-}
-
-.light pre {
-  background-color: var(--pre-bg-light);
-  color: var(--text-light);
-}
-
-.dark pre {
-  background-color: var(--pre-bg-dark);
-  color: var(--text-dark);
 }
 
 /* Footer */

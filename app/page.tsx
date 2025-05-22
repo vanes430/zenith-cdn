@@ -15,7 +15,6 @@ const CONFIG = {
 const FileExplorer = () => {
   const [files, setFiles] = useState<any[]>([]);
   const [currentFolder, setCurrentFolder] = useState<string>('');
-  const [selectedFileContent, setSelectedFileContent] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [darkMode, setDarkMode] = useState<boolean>(CONFIG.darkModeByDefault);
 
@@ -44,11 +43,10 @@ const FileExplorer = () => {
       const sortedFiles = data.sort((a: any, b: any) => {
         if (a.isDirectory && !b.isDirectory) return -1;
         if (!a.isDirectory && b.isDirectory) return 1;
-        return a.name.localeCompare(b.name); // Urutkan berdasarkan nama jika sama-sama folder atau file
+        return a.name.localeCompare(b.name);
       });
       setFiles(sortedFiles);
       setCurrentFolder(folder);
-      setSelectedFileContent(null);
     } catch (error) {
       setError('Error fetching files');
     }
@@ -69,19 +67,6 @@ const FileExplorer = () => {
   const handleBackToParent = () => {
     const parentFolder = currentFolder.split('/').slice(0, -1).join('/');
     fetchFiles(parentFolder);
-  };
-
-  const handleViewRawFile = async (file: string) => {
-    try {
-      const res = await fetch(`/api/files?folder=${currentFolder}&file=${file}`);
-      if (!res.ok) {
-        throw new Error('Failed to fetch file content');
-      }
-      const data = await res.json();
-      setSelectedFileContent(data.content);
-    } catch (error) {
-      setError('Error fetching file content');
-    }
   };
 
   return (
@@ -125,30 +110,22 @@ const FileExplorer = () => {
                           {file.name}
                         </span>
                       ) : (
-                        <span className="file-icon">{file.name}</span>
+                        <Link
+                          href={`/${currentFolder ? `${currentFolder}/` : ''}${file.name}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <span className="file-icon clickable">{file.name}</span>
+                        </Link>
                       )}
                     </td>
                     <td>{file.size}</td>
                     <td>{new Date(file.lastModified).toLocaleString()}</td>
-                    <td>
-                      {!file.isDirectory && (
-                        <Link href={`/${currentFolder ? `${currentFolder}/` : ''}${file.name}`}>
-                          <button onClick={() => handleViewRawFile(file.name)}>
-                            View Raw File
-                          </button>
-                        </Link>
-                      )}
-                    </td>
+                    <td>{/* Kolom Actions dikosongkan karena tidak ada tombol lagi */}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
-            {selectedFileContent && (
-              <div className="file-content">
-                <h3>File Content:</h3>
-                <pre>{selectedFileContent}</pre>
-              </div>
-            )}
           </div>
         )}
       </main>

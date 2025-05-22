@@ -5,8 +5,8 @@ import Link from 'next/link';
 
 // Konfigurasi yang dapat diatur
 const CONFIG = {
-  title: 'File Explorer',
-  copyrightText: '© 2025 Your Company Name. All rights reserved.',
+  title: 'Zenith-CDN',
+  copyrightText: '© 2025 Profesional Usage',
   folderIcon: '📁',
   fileIcon: '📄',
   darkModeByDefault: true,

@@ -1,23 +1,116 @@
 /* styles/globals.css */
+
+/* Default Styles */
 body {
   font-family: Arial, sans-serif;
   padding: 20px;
   background-color: #f4f4f4;
+  color: #333;
+  transition: background-color 0.3s, color 0.3s;
 }
 
-h1 {
+h1, h2, h3 {
   color: #333;
 }
 
-ul {
-  list-style-type: none;
-  padding: 0;
+button {
+  padding: 10px;
+  margin: 10px;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
-li {
-  padding: 8px;
-  margin: 4px 0;
+/* Dark Mode */
+.dark {
+  background-color: #121212;
+  color: white;
+}
+
+.dark button {
+  background-color: #333;
+  color: white;
+}
+
+.dark .file-list {
+  background-color: #222;
+  color: white;
+}
+
+.dark .table-header,
+.dark .file-item {
+  background-color: #333;
+}
+
+.dark .file-item:hover {
+  background-color: #444;
+}
+
+/* Light Mode */
+.light {
+  background-color: white;
+  color: black;
+}
+
+.light button {
+  background-color: #f4f4f4;
+  color: black;
+}
+
+.light .file-list {
   background-color: #fff;
+  color: black;
+}
+
+.light .table-header,
+.light .file-item {
+  background-color: #f9f9f9;
+}
+
+.light .file-item:hover {
+  background-color: #eee;
+}
+
+/* Grid Layout for Files */
+.file-list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.table-header {
+  display: contents;
+  font-weight: bold;
+  border-bottom: 2px solid #ddd;
+}
+
+.file-item {
+  display: contents;
+  padding: 10px;
   border: 1px solid #ddd;
-  border-radius: 4px;
+  border-radius: 5px;
+  background-color: #f4f4f4;
+}
+
+.file-item:hover {
+  background-color: #e2e2e2;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-start;
+}
+
+button {
+  background-color: #0070f3;
+  color: white;
+  border: none;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+button:hover {
+  background-color: #005bb5;
 }

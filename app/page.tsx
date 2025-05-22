@@ -1,5 +1,3 @@
-// app/page.tsx
-
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -8,7 +6,14 @@ import Link from 'next/link';
 const FileExplorer = () => {
   const [files, setFiles] = useState<any[]>([]);
   const [currentFolder, setCurrentFolder] = useState<string>('');
+  const [selectedFileContent, setSelectedFileContent] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [darkMode, setDarkMode] = useState<boolean>(true); // Default dark mode is true
+
+  // Function to toggle dark/light mode
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+  };
 
   const fetchFiles = async (folder: string) => {
     try {
@@ -19,6 +24,7 @@ const FileExplorer = () => {
       const data = await res.json();
       setFiles(data);
       setCurrentFolder(folder); // Menyimpan folder saat ini
+      setSelectedFileContent(null); // Reset isi file saat folder berubah
     } catch (error) {
       setError('Error fetching files');
     }
@@ -41,8 +47,26 @@ const FileExplorer = () => {
     fetchFiles(parentFolder); // Kembali ke parent folder
   };
 
+  const handleViewRawFile = async (file: string) => {
+    try {
+      const res = await fetch(`/api/files?folder=${currentFolder}&file=${file}`);
+      if (!res.ok) {
+        throw new Error('Failed to fetch file content');
+      }
+      const data = await res.json();
+      setSelectedFileContent(data.content); // Menyimpan isi file
+    } catch (error) {
+      setError('Error fetching file content');
+    }
+  };
+
   return (
-    <div>
+    <div className={darkMode ? 'dark' : 'light'}>
+      <header>
+        <button onClick={toggleDarkMode}>
+          {darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+        </button>
+      </header>
       <h2>Files in folder: {currentFolder || 'Root'}</h2>
       {error ? (
         <p>{error}</p>
@@ -54,22 +78,38 @@ const FileExplorer = () => {
               Back to Parent Folder ( : )
             </button>
           )}
-          <ul>
-            {files.map((file, index) => (
-              <li key={index}>
-                <strong>{file.name}</strong>
-                <p>Size: {file.size} bytes</p>
-                <p>Last Modified: {new Date(file.lastModified).toLocaleString()}</p>
-                {file.isDirectory ? (
-                  <button onClick={() => handleFolderChange(file.name)}>Open Folder</button>
-                ) : (
-                  <Link href={`/${currentFolder ? currentFolder + '/' : ''}${file.name}`}>
-                    <button>View Raw File</button>
-                  </Link>
-                )}
-              </li>
-            ))}
-          </ul>
+          <div className="file-list">
+            <div className="table-header">
+              <span>Name</span>
+              <span>Size (bytes)</span>
+              <span>Last Modified</span>
+              <span>Actions</span>
+            </div>
+            <div className="file-items">
+              {files.map((file, index) => (
+                <div key={index} className="file-item">
+                  <span>{file.name}</span>
+                  <span>{file.size}</span>
+                  <span>{new Date(file.lastModified).toLocaleString()}</span>
+                  <div className="actions">
+                    {file.isDirectory ? (
+                      <button onClick={() => handleFolderChange(file.name)}>Open Folder</button>
+                    ) : (
+                      <Link href={`/${currentFolder ? currentFolder + '/' : ''}${file.name}`}>
+                        <button>View Raw File</button>
+                      </Link>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          {selectedFileContent && (
+            <div>
+              <h3>File Content:</h3>
+              <pre>{selectedFileContent}</pre>
+            </div>
+          )}
         </div>
       )}
     </div>

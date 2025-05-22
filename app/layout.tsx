@@ -1,6 +1,8 @@
 // app/layout.tsx
 
-import './globals.css';
+'use client';
+
+import '../styles/globals.css';  // Pastikan ini benar
 
 export const metadata = {
   title: 'Simple File Explorer',

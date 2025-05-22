@@ -39,6 +39,10 @@ body {
   flex-direction: column;
 }
 
+.layout-container {
+  flex: 1;
+}
+
 /* Light Mode */
 .light {
   background-color: var(--background-light);
@@ -165,11 +169,11 @@ main {
 
 /* Icons */
 .folder-icon::before {
-  content: var(--folder-icon, '📁 '); /* Fallback ke 📁 jika tidak didefinisikan */
+  content: var(--folder-icon, '📁 ');
 }
 
 .file-icon::before {
-  content: var(--file-icon, '📄 '); /* Fallback ke 📄 jika tidak didefinisikan */
+  content: var(--file-icon, '📄 ');
 }
 
 /* File Content */

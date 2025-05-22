@@ -29,7 +29,6 @@ const FileExplorer = () => {
   const toggleDarkMode = () => {
     setDarkMode((prevMode) => {
       const newMode = !prevMode;
-      // Update class pada html element
       document.documentElement.classList.toggle('dark', newMode);
       document.documentElement.classList.toggle('light', !newMode);
       return newMode;
@@ -82,7 +81,7 @@ const FileExplorer = () => {
   };
 
   return (
-    <div>
+    <div className={darkMode ? 'dark' : 'light'}>
       <header>
         <h1>{CONFIG.title}</h1>
         <button onClick={toggleDarkMode}>

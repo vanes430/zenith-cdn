@@ -1,7 +1,5 @@
 // app/layout.tsx
 
-'use client';
-
 import '../styles/globals.css';
 
 export default function RootLayout({
@@ -16,13 +14,9 @@ export default function RootLayout({
         <meta name="description" content="A simple file explorer built with Next.js" />
       </head>
       <body>
-        <header>
-          <h1>File Explorer</h1>
-        </header>
-        <main>{children}</main>
-        <footer>
-          <p>&copy; 2025 Simple File Explorer</p>
-        </footer>
+        <div className="layout-container">
+          {children}
+        </div>
       </body>
     </html>
   );

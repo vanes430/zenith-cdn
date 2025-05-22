@@ -96,7 +96,7 @@ const FileExplorer = () => {
                       {file.isDirectory ? (
                         <button onClick={() => handleFolderChange(file.name)}>Open Folder</button>
                       ) : (
-                        <Link href={`/${currentFolder ? currentFolder + '/' : ''}${file.name}`}>
+                        <Link href={`/${currentFolder ? `${currentFolder}/` : ''}${file.name}`}>
                           <button>View Raw File</button>
                         </Link>
                       )}

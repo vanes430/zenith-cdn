@@ -3,6 +3,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 
 const FileExplorer = () => {
   const [files, setFiles] = useState<any[]>([]);
@@ -62,9 +63,9 @@ const FileExplorer = () => {
                 {file.isDirectory ? (
                   <button onClick={() => handleFolderChange(file.name)}>Open Folder</button>
                 ) : (
-                  <a href={file.rawUrl} target="_blank" rel="noopener noreferrer">
-                    View Raw File
-                  </a>
+                  <Link href={`/${currentFolder ? currentFolder + '/' : ''}${file.name}`}>
+                    <button>View Raw File</button>
+                  </Link>
                 )}
               </li>
             ))}

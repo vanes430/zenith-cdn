@@ -10,7 +10,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <title>Simple File Explorer</title>
+        <title>Zenith-CDN</title>
         <meta name="description" content="A simple file explorer built with Next.js" />
       </head>
       <body>

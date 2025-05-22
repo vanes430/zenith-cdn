@@ -17,15 +17,12 @@ const FileExplorer = () => {
 
   return (
     <div>
-      <h1>Simple File Explorer</h1>
-      <div>
-        <h2>Files:</h2>
-        <ul>
-          {files.map((file, index) => (
-            <li key={index}>{file}</li>
-          ))}
-        </ul>
-      </div>
+      <h2>Files:</h2>
+      <ul>
+        {files.map((file, index) => (
+          <li key={index}>{file}</li>
+        ))}
+      </ul>
     </div>
   );
 };

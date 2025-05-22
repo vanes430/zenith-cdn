@@ -63,51 +63,54 @@ const FileExplorer = () => {
   return (
     <div className={darkMode ? 'dark' : 'light'}>
       <header>
+        <h1>File Explorer</h1>
         <button onClick={toggleDarkMode}>
           {darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
         </button>
       </header>
       <h2>Files in folder: {currentFolder || 'Root'}</h2>
       {error ? (
-        <p>{error}</p>
+        <p className="error">{error}</p>
       ) : (
         <div>
-          <button onClick={handleBackToRoot}>Back to Root</button>
-          {currentFolder && (
-            <button onClick={handleBackToParent}>
-              Back to Parent Folder ( : )
-            </button>
-          )}
+          <div className="button-group">
+            <button onClick={handleBackToRoot}>Back to Root</button>
+            {currentFolder && (
+              <button onClick={handleBackToParent}>Back to Parent Folder</button>
+            )}
+          </div>
           <div className="file-list">
             <div className="table-header">
               <div>Name</div>
-              <div>Size (bytes)</div>
+              <div>Size (Bytes)</div>
               <div>Last Modified</div>
               <div>Actions</div>
             </div>
             <div className="file-items">
               {files.map((file, index) => (
                 <div key={index} className="file-item">
-                  <div className="card">
-                    <h4>{file.name}</h4>
-                    <p>Size: {file.size}</p>
-                    <p>Last Modified: {new Date(file.lastModified).toLocaleString()}</p>
-                    <div className="actions">
-                      {file.isDirectory ? (
-                        <button onClick={() => handleFolderChange(file.name)}>Open Folder</button>
-                      ) : (
-                        <Link href={`/${currentFolder ? `${currentFolder}/` : ''}${file.name}`}>
-                          <button>View Raw File</button>
-                        </Link>
-                      )}
-                    </div>
+                  <div>{file.name}</div>
+                  <div>{file.size}</div>
+                  <div>{new Date(file.lastModified).toLocaleString()}</div>
+                  <div className="actions">
+                    {file.isDirectory ? (
+                      <button onClick={() => handleFolderChange(file.name)}>
+                        Open Folder
+                      </button>
+                    ) : (
+                      <Link href={`/${currentFolder ? `${currentFolder}/` : ''}${file.name}`}>
+                        <button onClick={() => handleViewRawFile(file.name)}>
+                          View Raw File
+                        </button>
+                      </Link>
+                    )}
                   </div>
                 </div>
               ))}
             </div>
           </div>
           {selectedFileContent && (
-            <div>
+            <div className="file-content">
               <h3>File Content:</h3>
               <pre>{selectedFileContent}</pre>
             </div>

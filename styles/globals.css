@@ -1,15 +1,66 @@
+/* CSS Variables for Configurable Colors */
+:root {
+  /* Light Mode */
+  --background-light: #fff;
+  --text-light: #1a1a1a;
+  --table-header-bg-light: #f8f9fa;
+  --table-border-light: #ddd;
+  --hover-bg-light: #f0f0f0;
+  --pre-bg-light: #f5f5f5;
+  --button-bg-light: #0070f3;
+  --button-text-light: #fff;
+  --button-hover-bg-light: #005bb5;
+
+  /* Dark Mode */
+  --background-dark: #121212;
+  --text-dark: #e0e0e0;
+  --table-header-bg-dark: #1a1a1a;
+  --table-border-dark: #444;
+  --hover-bg-dark: #2a2a2a;
+  --pre-bg-dark: #222;
+  --button-bg-dark: #0070f3;
+  --button-text-dark: #fff;
+  --button-hover-bg-dark: #005bb5;
+}
+
 /* Default Styles */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
 body {
   font-family: 'Arial', sans-serif;
   padding: 20px;
-  background-color: #f4f4f4;
-  color: #333;
   transition: background-color 0.3s, color 0.3s;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Light Mode */
+.light {
+  background-color: var(--background-light);
+  color: var(--text-light);
+}
+
+/* Dark Mode */
+.dark {
+  background-color: var(--background-dark);
+  color: var(--text-dark);
 }
 
 h1, h2, h3 {
-  color: #1a1a1a;
   margin-bottom: 15px;
+}
+
+.light h1, .light h2, .light h3 {
+  color: var(--text-light);
+}
+
+.dark h1, .dark h2, .dark h3 {
+  color: var(--text-dark);
 }
 
 button {
@@ -22,12 +73,35 @@ button {
   transition: background-color 0.3s;
 }
 
+.light button {
+  background-color: var(--button-bg-light);
+  color: var(--button-text-light);
+}
+
+.light button:hover {
+  background-color: var(--button-hover-bg-light);
+}
+
+.dark button {
+  background-color: var(--button-bg-dark);
+  color: var(--button-text-dark);
+}
+
+.dark button:hover {
+  background-color: var(--button-hover-bg-dark);
+}
+
 /* Header */
 header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
+}
+
+/* Main Content */
+main {
+  flex: 1;
 }
 
 /* Button Group */
@@ -44,6 +118,10 @@ header {
   font-weight: bold;
 }
 
+.dark .error {
+  color: #ff6b6b;
+}
+
 /* File Table */
 .file-table {
   width: 100%;
@@ -54,25 +132,44 @@ header {
 .file-table th, .file-table td {
   padding: 8px 12px;
   text-align: left;
-  border-bottom: 1px solid #ddd;
 }
 
-.file-table th {
-  font-weight: bold;
+.light .file-table th {
+  background-color: var(--table-header-bg-light);
+  color: var(--text-light);
+  border-bottom: 1px solid var(--table-border-light);
+}
+
+.light .file-table td {
+  border-bottom: 1px solid var(--table-border-light);
+}
+
+.dark .file-table th {
+  background-color: var(--table-header-bg-dark);
+  color: var(--text-dark);
+  border-bottom: 1px solid var(--table-border-dark);
+}
+
+.dark .file-table td {
+  border-bottom: 1px solid var(--table-border-dark);
 }
 
 /* File Row Hover */
-.file-row:hover {
-  background-color: #f0f0f0;
+.light .file-row:hover {
+  background-color: var(--hover-bg-light);
+}
+
+.dark .file-row:hover {
+  background-color: var(--hover-bg-dark);
 }
 
 /* Icons */
 .folder-icon::before {
-  content: '📁 ';
+  content: var(--folder-icon, '📁 '); /* Fallback ke 📁 jika tidak didefinisikan */
 }
 
 .file-icon::before {
-  content: '📄 ';
+  content: var(--file-icon, '📄 '); /* Fallback ke 📄 jika tidak didefinisikan */
 }
 
 /* File Content */
@@ -90,71 +187,25 @@ pre {
   overflow-x: auto;
 }
 
-/* Dark Mode */
-.dark {
-  background-color: #121212;
-  color: #e0e0e0;
-}
-
-.dark h1, .dark h2, .dark h3 {
-  color: #e0e0e0;
-}
-
-.dark button {
-  background-color: #0070f3;
-  color: #fff;
-}
-
-.dark button:hover {
-  background-color: #005bb5;
-}
-
-.dark .error {
-  color: #ff6b6b;
-}
-
-.dark .file-table th {
-  background-color: #1a1a1a;
-  color: #e0e0e0;
-  border-bottom: 1px solid #444;
-}
-
-.dark .file-table td {
-  border-bottom: 1px solid #444;
-}
-
-.dark .file-row:hover {
-  background-color: #2a2a2a;
+.light pre {
+  background-color: var(--pre-bg-light);
+  color: var(--text-light);
 }
 
 .dark pre {
-  background-color: #222;
-  color: #e0e0e0;
+  background-color: var(--pre-bg-dark);
+  color: var(--text-dark);
 }
 
-/* Light Mode */
-.light {
-  background-color: #fff;
-  color: #1a1a1a;
+/* Footer */
+footer {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 14px;
 }
 
-.light button {
-  background-color: #0070f3;
-  color: #fff;
-}
-
-.light button:hover {
-  background-color: #005bb5;
-}
-
-.light .file-table th {
-  background-color: #f8f9fa;
-  color: #1a1a1a;
-}
-
-.light pre {
-  background-color: #f5f5f5;
-  color: #1a1a1a;
+.copyright {
+  opacity: 0.7;
 }
 
 /* Responsive Adjustments */

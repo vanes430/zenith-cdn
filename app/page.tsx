@@ -1,6 +1,6 @@
 // app/page.tsx
 
-'use client';  // Tambahkan directive ini di atas
+'use client';  // Pastikan ada di bagian atas
 
 import { useState, useEffect } from 'react';
 

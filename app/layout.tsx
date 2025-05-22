@@ -2,12 +2,7 @@
 
 'use client';
 
-import '../styles/globals.css';  // Pastikan ini benar
-
-export const metadata = {
-  title: 'Simple File Explorer',
-  description: 'A simple file explorer built with Next.js',
-};
+import '../styles/globals.css';
 
 export default function RootLayout({
   children,
@@ -16,7 +11,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <head />
+      <head>
+        <title>Simple File Explorer</title>
+        <meta name="description" content="A simple file explorer built with Next.js" />
+      </head>
       <body>
         <header>
           <h1>File Explorer</h1>

@@ -23,28 +23,28 @@ const FileExplorer = () => {
       }
       const data = await res.json();
       setFiles(data);
-      setCurrentFolder(folder); // Menyimpan folder saat ini
-      setSelectedFileContent(null); // Reset isi file saat folder berubah
+      setCurrentFolder(folder);
+      setSelectedFileContent(null);
     } catch (error) {
       setError('Error fetching files');
     }
   };
 
   useEffect(() => {
-    fetchFiles(''); // Mulai dengan folder root saat aplikasi dimuat
+    fetchFiles('');
   }, []);
 
   const handleFolderChange = (folder: string) => {
-    fetchFiles(folder); // Memuat folder yang dipilih
+    fetchFiles(folder);
   };
 
   const handleBackToRoot = () => {
-    fetchFiles(''); // Kembali ke folder root
+    fetchFiles('');
   };
 
   const handleBackToParent = () => {
     const parentFolder = currentFolder.split('/').slice(0, -1).join('/');
-    fetchFiles(parentFolder); // Kembali ke parent folder
+    fetchFiles(parentFolder);
   };
 
   const handleViewRawFile = async (file: string) => {
@@ -54,7 +54,7 @@ const FileExplorer = () => {
         throw new Error('Failed to fetch file content');
       }
       const data = await res.json();
-      setSelectedFileContent(data.content); // Menyimpan isi file
+      setSelectedFileContent(data.content);
     } catch (error) {
       setError('Error fetching file content');
     }
@@ -79,20 +79,26 @@ const FileExplorer = () => {
               <button onClick={handleBackToParent}>Back to Parent Folder</button>
             )}
           </div>
-          <div className="file-list">
-            <div className="table-header">
-              <div>Name</div>
-              <div>Size (Bytes)</div>
-              <div>Last Modified</div>
-              <div>Actions</div>
-            </div>
-            <div className="file-items">
+          <table className="file-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Size (Bytes)</th>
+                <th>Last Modified</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
               {files.map((file, index) => (
-                <div key={index} className="file-item">
-                  <div>{file.name}</div>
-                  <div>{file.size}</div>
-                  <div>{new Date(file.lastModified).toLocaleString()}</div>
-                  <div className="actions">
+                <tr key={index} className="file-row">
+                  <td>
+                    <span className={file.isDirectory ? 'folder-icon' : 'file-icon'}>
+                      {file.name}
+                    </span>
+                  </td>
+                  <td>{file.size}</td>
+                  <td>{new Date(file.lastModified).toLocaleString()}</td>
+                  <td>
                     {file.isDirectory ? (
                       <button onClick={() => handleFolderChange(file.name)}>
                         Open Folder
@@ -104,11 +110,11 @@ const FileExplorer = () => {
                         </button>
                       </Link>
                     )}
-                  </div>
-                </div>
+                  </td>
+                </tr>
               ))}
-            </div>
-          </div>
+            </tbody>
+          </table>
           {selectedFileContent && (
             <div className="file-content">
               <h3>File Content:</h3>

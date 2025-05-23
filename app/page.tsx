@@ -78,7 +78,7 @@ const FileExplorer = () => {
         </button>
       </header>
       <main>
-        <h2>Files in folder: {currentFolder || 'Root'}</h2>
+        <h2>Current: {currentFolder || 'Root'}</h2>
         {error ? (
           <p className="error">{error}</p>
         ) : (
